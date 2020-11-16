@@ -1,20 +1,33 @@
 package io.ruke.backend.demo.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 //  This annotation tell Hibernate to create a table from this class.
 @Entity
 public class User {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
+    @Size(min = 2, message = "First name must be at least 2 characters")
     private String firstName;
 
+    @NotNull
+    @Size(min = 2, message = "Last name must be at least 2 characters")
     private String lastName;
 
+    @NotBlank(message = "Email must not be blank")
+    @Email
     private String email;
 
+    @NotNull
+    @Size(min = 3, message = "Password must be at least 3 characters")
     private String password;
 
     public User(Long id, String firstName, String lastName, String email, String password) {

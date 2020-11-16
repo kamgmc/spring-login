@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -51,7 +52,7 @@ public class UserController {
      * @return created user
      */
     @PostMapping
-    public User create(@RequestBody User user) {
+    public User create(@Valid @RequestBody User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
@@ -63,7 +64,7 @@ public class UserController {
      * @return created user
      */
     @PutMapping("/{id}")
-    public User update(@RequestBody User user, @PathVariable("id") long id) {
+    public User update(@Valid @RequestBody User user, @PathVariable("id") long id) {
         User storedUser = userRepository
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User " + id + " not found"));
